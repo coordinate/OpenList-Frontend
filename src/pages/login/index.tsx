@@ -218,7 +218,7 @@ const Login = () => {
   if (ldapLoginEnabled) {
     setUseLdap(true)
   }
-  setTimeout(Login, 2000)
+  setTimeout(Login, 200)
   return (
     <Center zIndex="1" w="$full" h="100vh">
       <VStack
