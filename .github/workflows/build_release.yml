@@ -94,30 +94,30 @@ jobs:
       #     # For local build, needn't push, the tag will be created by `gh release create`
       #     git tag -s "v${{ steps.semver.outputs.version }}" -m "Release v${{ steps.semver.outputs.version }}"
 
-      # - name: Get current tag
-      #   id: get_current_tag
-      #   run: |
-      #     # Remove existing tag `rolling`, since `rolling` should always point to the latest commit
-      #     # This is necessary to avoid conflicts with the changelog generation
-      #     git tag -d rolling 2>/dev/null || true
+      - name: Get current tag
+        id: get_current_tag
+        run: |
+          # Remove existing tag `rolling`, since `rolling` should always point to the latest commit
+          # This is necessary to avoid conflicts with the changelog generation
+          git tag -d rolling 2>/dev/null || true
 
-      #     # Get the current tag
-      #     CURRENT_TAG=$(git describe --tags --abbrev=0)
-      #     echo "current_tag=$CURRENT_TAG" >> $GITHUB_OUTPUT
+          # Get the current tag
+          CURRENT_TAG=$(git describe --tags --abbrev=0)
+          echo "current_tag=$CURRENT_TAG" >> $GITHUB_OUTPUT
 
-      #     # Temporarily remove all pre-release tags (tags containing '-' / '+')
-      #     # This prevents them from interfering with changelog generation
-      #     PRE_RELEASE_TAGS=$(git tag -l | grep -E "(-|\+)" || true)
-      #     if [ -n "$PRE_RELEASE_TAGS" ]; then
-      #       echo "Temporarily removing pre-release tags: $PRE_RELEASE_TAGS"
-      #       echo "$PRE_RELEASE_TAGS" | xargs -r git tag -d
-      #     fi
+          # Temporarily remove all pre-release tags (tags containing '-' / '+')
+          # This prevents them from interfering with changelog generation
+          PRE_RELEASE_TAGS=$(git tag -l | grep -E "(-|\+)" || true)
+          if [ -n "$PRE_RELEASE_TAGS" ]; then
+            echo "Temporarily removing pre-release tags: $PRE_RELEASE_TAGS"
+            echo "$PRE_RELEASE_TAGS" | xargs -r git tag -d
+          fi
 
-      #     # Add back the current tag if is a pre-release
-      #     # Should not add `-f`, as it will overwrite the existing tag
-      #     if [[ "${{ steps.check_pre_release.outputs.is_pre_release }}" == "true" ]]; then
-      #       git tag -s "$CURRENT_TAG" -m "Release $CURRENT_TAG"
-      #     fi
+          # Add back the current tag if is a pre-release
+          # Should not add `-f`, as it will overwrite the existing tag
+          if [[ "${{ steps.check_pre_release.outputs.is_pre_release }}" == "true" ]]; then
+            git tag -s "$CURRENT_TAG" -m "Release $CURRENT_TAG"
+          fi
 
       # - name: Generate changelog
       #   id: generate_changelog
@@ -176,7 +176,7 @@ jobs:
             --title "Release ${{ steps.get_current_tag.outputs.current_tag }}" \
             --prerelease=${{ steps.check_pre_release.outputs.is_pre_release }} \
             ${{ steps.get_current_tag.outputs.current_tag }} \
-            dist/openlist-frontend-dist-v.tar.gz dist/i18n.tar.gz
+            dist/openlist-frontend-dist-v*.tar.gz dist/i18n.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
