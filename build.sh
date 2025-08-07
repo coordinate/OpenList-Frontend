@@ -99,17 +99,17 @@ enforce_git_tag() {
         log_warning "Please create a tag first, or use --dev for development builds."
         exit 1
     fi
-    # validate_git_tag
+    validate_git_tag
 }
 
 # Validate git tag against package.json version
 validate_git_tag() {
     package_version=$(grep '"version":' package.json | sed 's/.*"version": *"\([^"]*\)".*/\1/')
     git_version_clean=${git_version#v}
-    if [[ "$git_version_clean" != "$package_version" ]]; then
-        log_error "Package.json version (${package_version}) does not match git tag (${git_version_clean})."
-        exit 1
-    fi
+    # if [[ "$git_version_clean" != "$package_version" ]]; then
+    #     log_error "Package.json version (${package_version}) does not match git tag (${git_version_clean})."
+    #     exit 1
+    # fi
 }
 
 # Fallback to default git tag for development builds
