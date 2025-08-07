@@ -18,6 +18,7 @@ import { BsQrCode } from "solid-icons/bs"
 import QRCode from "qrcode"
 
 export const Download = (props: { openWith?: boolean }) => {
+  return
   const t = useT()
   const { copyCurrentRawLink } = useCopyLink()
   const [qrUrl, setQrUrl] = createSignal("")

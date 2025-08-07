@@ -21,6 +21,7 @@ import { bus } from "~/utils"
 import { CenterIcon } from "./Icon"
 
 export const Download = () => {
+  return
   const t = useT()
   const colorScheme = "neutral"
   const { batchDownloadSelected, sendToAria2, playlistDownloadSelected } =

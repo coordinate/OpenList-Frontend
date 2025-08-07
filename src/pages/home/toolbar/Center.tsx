@@ -1,10 +1,10 @@
 import { Box, HStack, useColorModeValue } from "@hope-ui/solid"
 import { createMemo, For, Show } from "solid-js"
 import { checkboxOpen, haveSelected, objStore, selectAll, State } from "~/store"
-import { CopyLink } from "./CopyLink"
+// import { CopyLink } from "./CopyLink"
 import { CenterIcon } from "./Icon"
 import { bus } from "~/utils"
-import { Download } from "./Download"
+// import { Download } from "./Download"
 import { Motion, Presence } from "solid-motionone"
 
 export const Center = () => {
@@ -53,8 +53,8 @@ export const Center = () => {
                 )
               }}
             </For>
-            <CopyLink />
-            <Download />
+            {/* <CopyLink /> */}
+            {/* <Download /> */}
             <CenterIcon
               name="cancel_select"
               onClick={() => {
