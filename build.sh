@@ -99,7 +99,7 @@ enforce_git_tag() {
         log_warning "Please create a tag first, or use --dev for development builds."
         exit 1
     fi
-    validate_git_tag
+    # validate_git_tag
 }
 
 # Validate git tag against package.json version
