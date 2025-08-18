@@ -183,7 +183,9 @@ jobs:
       - name: Rename dist
         run: |
           cd dist 
-          mv openlist-frontend-dist-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz dist.tar.gz
+          sudo mv openlist-frontend-dist-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz dist.tar.gz
+          sudo shopt -s extglob
+          sudo rm -rf !(dist.tar.gz)
           ls
 
       - name: Upload dist to Artifact
