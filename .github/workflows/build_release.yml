@@ -203,7 +203,7 @@ jobs:
           cdn_type: eo
           # cdn_prefix: https://cdn.example.com/demo/
           eo_zone: zone-123456789
-          local_path: "dist/dist.tar.gz"
+          local_path: "dist"
           remote_path: github
           clean: false
 
