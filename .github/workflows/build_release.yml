@@ -184,8 +184,7 @@ jobs:
         run: |
           cd dist 
           sudo mv openlist-frontend-dist-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz dist.tar.gz
-          sudo shopt -s extglob
-          sudo rm -rf !(dist.tar.gz)
+          sudo find . -mindepth 1 -not -name "dist.tar.gz" -exec rm -rf {} +
           ls
 
       - name: Upload dist to Artifact
