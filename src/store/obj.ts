@@ -2,10 +2,11 @@ import naturalSort from "typescript-natural-sort"
 import { cookieStorage, createStorageSignal } from "@solid-primitives/storage"
 import { createMemo, createSignal } from "solid-js"
 import { createStore, produce } from "solid-js/store"
-import { Obj, StoreObj } from "~/types"
+import { Obj, ObjType, StoreObj } from "~/types"
 import { bus, log } from "~/utils"
 import { keyPressed } from "./key-event"
 import { local } from "./local_settings"
+import { useT } from "~/hooks"
 
 export enum State {
   Initial, // Initial state
@@ -221,4 +222,50 @@ export { _password as password }
 export const setPassword = (password: string) => {
   _setPassword(password)
   cookieStorage.setItem("browser-password", password)
+}
+
+const getCountStr = (
+  objs: StoreObj[],
+  prefix: string,
+  filterType?: ObjType,
+) => {
+  const t = useT()
+
+  if (filterType) {
+    objs = objs.filter((obj) => obj.is_dir || obj.type === filterType)
+  }
+
+  if (objs.length === 0) return ""
+
+  const folders = objs.filter((o) => o.is_dir).length
+  const files = objs.length - folders
+  const vars = { folders: folders.toString(), files: files.toString() }
+  const key =
+    folders && files
+      ? `${prefix}`
+      : folders
+        ? `${prefix}_folders`
+        : files
+          ? `${prefix}_files`
+          : ""
+  return key ? t(`home.obj.count.${key}`, vars) : ""
+}
+
+export const countMsg = (filterType?: ObjType) =>
+  getCountStr(objStore.objs, "count", filterType)
+
+export const selectedMsg = (filterType?: ObjType) => {
+  const selectedList = selectedObjs()
+  const isSelected = selectedList.length > 0
+
+  return isSelected ? getCountStr(selectedList, "selected", filterType) : ""
+}
+
+export const smartCountMsg = (filterType?: ObjType) => {
+  const selectedList = selectedObjs()
+  const isSelected = selectedList.length > 0
+
+  return isSelected
+    ? getCountStr(selectedList, "selected", filterType)
+    : countMsg(filterType)
 }

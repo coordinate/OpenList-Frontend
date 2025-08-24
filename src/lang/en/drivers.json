@@ -70,12 +70,20 @@
     "AccessToken": "AccessToken",
     "ClientID": "ClientID",
     "ClientSecret": "ClientSecret",
+    "DirectLink": "DirectLink",
+    "DirectLink-tips": "use direct link when download file",
+    "DirectLinkPrivateKey": "DirectLinkPrivateKey",
+    "DirectLinkPrivateKey-tips": "private key for direct link, if URL authentication is enabled",
+    "DirectLinkValidDuration": "DirectLinkValidDuration",
+    "DirectLinkValidDuration-tips": "minutes, if URL authentication is enabled",
     "RefreshToken": "RefreshToken",
     "UploadThread": "UploadThread",
     "UploadThread-tips": "the threads of upload",
     "root_folder_id": "Root folder id"
   },
   "123Pan": {
+    "UploadThread": "UploadThread",
+    "UploadThread-tips": "the threads of upload",
     "password": "Password",
     "root_folder_id": "Root folder id",
     "username": "Username"
@@ -400,6 +408,15 @@
     "thumbnail": "Thumbnail",
     "thumbnail-tips": "enable thumbnail which pre-generated under .thumbnails folder"
   },
+  "Degoo": {
+    "password": "Password",
+    "password-tips": "Your Degoo account password",
+    "root_folder_id": "Root folder id",
+    "token": "Token",
+    "token-tips": "Access token for Degoo API, will be obtained automatically if not provided",
+    "username": "Username",
+    "username-tips": "Your Degoo account email"
+  },
   "Doge": {
     "access_key_id": "Access key id",
     "add_filename_to_disposition": "Add filename to disposition",
@@ -439,6 +456,7 @@
     "share_ids": "Share ids"
   },
   "Dropbox": {
+    "RootNamespaceId": "RootNamespaceId",
     "api_url_address": "Api url address",
     "client_id": "Client id",
     "client_id-tips": "Keep it empty if you don't have one",
@@ -601,9 +619,12 @@
     "share_id": "Share id",
     "share_id-tips": "The part after the last / in the shared link",
     "share_pwd": "Share pwd",
-    "share_pwd-tips": "The password of the shared link"
+    "share_pwd-tips": "The password of the shared link",
+    "show_root_folder": "Show root folder"
   },
   "Local": {
+    "directory_size": "Directory size",
+    "directory_size-tips": "This might impact host performance",
     "mkdir_perm": "Mkdir perm",
     "recycle_bin_path": "Recycle bin path",
     "recycle_bin_path-tips": "path to recycle bin, delete permanently if empty or keep 'delete permanently'",
@@ -723,6 +744,13 @@
     "url": "Url",
     "username": "Username"
   },
+  "OpenListShare": {
+    "forward_archive_requests": "Forward archive requests",
+    "pwd": "Pwd",
+    "root_folder_path": "Root folder path",
+    "sid": "Sid",
+    "url": "Url"
+  },
   "PikPak": {
     "captcha_token": "Captcha token",
     "device_id": "Device id",
@@ -796,6 +824,11 @@
   },
   "QuarkTV": {
     "device_id": "Device id",
+    "link_method": "Link method",
+    "link_methods": {
+      "download": "Download",
+      "streaming": "Streaming"
+    },
     "query_token": "Query token",
     "query_token-tips": "don't edit'",
     "refresh_token": "Refresh token",
@@ -850,10 +883,14 @@
     "username": "Username"
   },
   "Strm": {
+    "downloadFileTypes": "DownloadFileTypes",
+    "downloadFileTypes-tips": "Files need to download with strm (usally subtitles)",
     "encodePath": "EncodePath",
     "encodePath-tips": "encode the path in the strm file",
     "filterFileTypes": "FilterFileTypes",
     "filterFileTypes-tips": "Supports suffix name of strm file",
+    "localModel": "LocalModel",
+    "localModel-tips": "enable local mode",
     "paths": "Paths",
     "siteUrl": "SiteUrl",
     "siteUrl-tips": "The prefix URL of the strm file"
@@ -1071,6 +1108,11 @@
   },
   "UCTV": {
     "device_id": "Device id",
+    "link_method": "Link method",
+    "link_methods": {
+      "download": "Download",
+      "streaming": "Streaming"
+    },
     "query_token": "Query token",
     "query_token-tips": "don't edit'",
     "refresh_token": "Refresh token",
@@ -1192,6 +1234,7 @@
     "Cloudreve": {},
     "Cloudreve V4": {},
     "Crypt": {},
+    "Degoo": {},
     "Doge": {},
     "Doubao": {},
     "DoubaoShare": {},
@@ -1221,6 +1264,7 @@
     "Onedrive Sharelink": {},
     "OnedriveAPP": {},
     "OpenList": {},
+    "OpenListShare": {},
     "PikPak": {},
     "PikPakShare": {},
     "Quark": {},
@@ -1272,6 +1316,7 @@
     "Cloudreve": "Cloudreve",
     "Cloudreve V4": "Cloudreve V4",
     "Crypt": "Crypt",
+    "Degoo": "Degoo",
     "Doge": "Doge",
     "Doubao": "Doubao",
     "DoubaoShare": "DoubaoShare",
@@ -1299,6 +1344,7 @@
     "Onedrive Sharelink": "Onedrive Sharelink",
     "OnedriveAPP": "OnedriveAPP",
     "OpenList": "OpenList",
+    "OpenListShare": "OpenListShare",
     "PikPak": "PikPak",
     "PikPakShare": "PikPakShare",
     "Quark": "Quark",

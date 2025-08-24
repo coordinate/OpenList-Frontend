@@ -4,58 +4,31 @@ import {
   BreadcrumbLink,
   BreadcrumbProps,
   BreadcrumbSeparator,
-  HStack,
-  Text,
 } from "@hope-ui/solid"
 import { Link } from "@solidjs/router"
 import { createMemo, For, Show } from "solid-js"
 import { usePath, useRouter, useT } from "~/hooks"
-import { getSetting, local, objStore, State } from "~/store"
+import { getSetting, local } from "~/store"
 import { encodePath, hoverColor, joinBase } from "~/utils"
 
 export const Nav = () => {
-  const { pathname } = useRouter()
-  const paths = createMemo(() => ["", ...pathname().split("/").filter(Boolean)])
+  const { pathname, isShare } = useRouter()
+  const paths = createMemo(() => {
+    if (!isShare()) {
+      return ["", ...pathname().split("/").filter(Boolean)]
+    } else {
+      const p = pathname().split("/").filter(Boolean)
+      return [`@s/${p[1] ?? ""}`, ...p.slice(2)]
+    }
+  })
   const t = useT()
   const { setPathAs } = usePath()
 
-  const folderInfo = createMemo(() => {
-    const { dir, file } = objStore.objs.reduce(
-      (acc, item) => {
-        if (item.is_dir) {
-          acc.dir++
-        } else {
-          acc.file++
-        }
-        return acc
-      },
-      { dir: 0, file: 0 },
-    )
-
-    const parts: string[] = []
-    if (dir) parts.push(`D:${dir}`)
-    if (file) parts.push(`F:${file}`)
-    return parts.join(" ")
-  })
-  const selectInfo = createMemo(() => {
-    const { selected } = objStore.objs.reduce(
-      (acc, item) => {
-        if (item.selected) acc.selected++
-        return acc
-      },
-      { selected: 0 },
-    )
-
-    if (!selected) {
-      return ""
-    }
-    return `S:${selected} `
-  })
   const stickyProps = createMemo<BreadcrumbProps>(() => {
     const mask: BreadcrumbProps = {
       _after: {
         content: "",
-        bgColor: "$background",
+        backgroundColor: "$background",
         position: "absolute",
         height: "100%",
         width: "99vw",
@@ -82,59 +55,47 @@ export const Nav = () => {
   })
 
   return (
-    <HStack background="$background" class="nav" w="$full">
-      <Breadcrumb {...stickyProps} flexGrow="1">
-        <For each={paths()}>
-          {(name, i) => {
-            const isLast = createMemo(() => i() === paths().length - 1)
-            const path = paths()
-              .slice(0, i() + 1)
-              .join("/")
-            const href = encodePath(path)
-            let text = () => name
-            if (text() === "") {
-              text = () => getSetting("home_icon") + t("manage.sidemenu.home")
-            }
-            return (
-              <BreadcrumbItem class="nav-item">
-                <BreadcrumbLink
-                  class="nav-link"
-                  css={{
-                    wordBreak: "break-all",
-                  }}
-                  color="unset"
-                  _hover={{ bgColor: hoverColor(), color: "unset" }}
-                  _active={{ transform: "scale(.95)", transition: "0.1s" }}
-                  cursor="pointer"
-                  p="$1"
-                  rounded="$lg"
-                  currentPage={isLast()}
-                  as={isLast() ? undefined : Link}
-                  href={joinBase(href)}
-                  onMouseEnter={() => setPathAs(path)}
-                >
-                  {text()}
-                </BreadcrumbLink>
-                <Show when={!isLast()}>
-                  <BreadcrumbSeparator class="nav-separator" />
-                </Show>
-              </BreadcrumbItem>
-            )
-          }}
-        </For>
-      </Breadcrumb>
-      <Show when={objStore.state == State.Folder}>
-        <Text
-          css={{
-            whiteSpace: "nowrap",
-            userSelect: "none",
-          }}
-          p="$1"
-        >
-          {selectInfo()}
-          {folderInfo()}
-        </Text>
-      </Show>
-    </HStack>
+    <Breadcrumb {...stickyProps} background="$background" class="nav" w="$full">
+      <For each={paths()}>
+        {(name, i) => {
+          const isLast = createMemo(() => i() === paths().length - 1)
+          const path = paths()
+            .slice(0, i() + 1)
+            .join("/")
+          const href = encodePath(path)
+          let text = () => name
+          if (!isShare() && text() === "") {
+            text = () => getSetting("home_icon") + t("manage.sidemenu.home")
+          } else if (isShare() && i() === 0) {
+            text = () => getSetting("share_icon") + t("manage.sidemenu.shares")
+          }
+          return (
+            <BreadcrumbItem class="nav-item">
+              <BreadcrumbLink
+                class="nav-link"
+                css={{
+                  wordBreak: "break-all",
+                }}
+                color="unset"
+                _hover={{ backgroundColor: hoverColor(), color: "unset" }}
+                _active={{ transform: "scale(.95)", transition: "0.1s" }}
+                cursor="pointer"
+                p="$1"
+                rounded="$lg"
+                currentPage={isLast()}
+                as={isLast() ? undefined : Link}
+                href={joinBase(href)}
+                onMouseEnter={() => setPathAs(path)}
+              >
+                {text()}
+              </BreadcrumbLink>
+              <Show when={!isLast()}>
+                <BreadcrumbSeparator class="nav-separator" />
+              </Show>
+            </BreadcrumbItem>
+          )
+        }}
+      </For>
+    </Breadcrumb>
   )
 }
