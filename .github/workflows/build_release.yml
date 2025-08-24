@@ -133,13 +133,24 @@ jobs:
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
-      # - name: Checkout lite version code
-      #   uses: actions/checkout@v4
-      #   with:
-      #     ref: lite
-      #     path: lite
-      #     fetch-depth: 0
-      #     submodules: recursive
+      - name: Move regular build
+        run: |
+          mkdir -p regular-dist
+          mv dist/* regular-dist/
+
+      - name: Build Lite Release
+        run: |
+          chmod +x build.sh
+          ./build.sh --release --compress --lite
+        env:
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+
+      - name: Move lite build and restore regular build
+        run: |
+          mkdir -p lite-dist
+          mv dist/* lite-dist/
+          mv regular-dist/* dist/
 
       # - name: Setup CI Bot
       #   if: github.event_name == 'workflow_dispatch'
@@ -183,8 +194,10 @@ jobs:
       - name: Rename dist
         run: |
           cd dist 
+          ls
           sudo mv openlist-frontend-dist-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz dist.tar.gz
-          sudo find . -mindepth 1 -not -name "dist.tar.gz" -exec rm -rf {} +
+          sudo mv openlist-frontend-dist-lite-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz dist-lite.tar.gz
+          sudo find . -mindepth 1 -not \( -name "dist.tar.gz" -o -name "dist-lite.tar.gz" \) -exec rm -rf {} +
           ls
 
       - name: Upload dist to Artifact
