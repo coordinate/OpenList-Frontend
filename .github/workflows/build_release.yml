@@ -148,57 +148,22 @@ jobs:
 
       - name: Move lite build and restore regular build
         run: |
-          mkdir -p lite-dist
-          mv dist/* lite-dist/
-          mv regular-dist/* dist/
-
-      # - name: Setup CI Bot
-      #   if: github.event_name == 'workflow_dispatch'
-      #   working-directory: ./lite
-      #   run: |
-      #     git config user.name "The OpenList Bot"
-      #     git config user.email "bot@openlist.team"
-
-      # - name: Update package.json and commit
-      #   if: github.event_name == 'workflow_dispatch'
-      #   working-directory: ./lite
-      #   run: |
-      #     jq --arg version "${{ steps.semver.outputs.version }}" '.version = $version' package.json > package.json.tmp && mv package.json.tmp package.json
-      #     git add package.json
-      #     git commit -S -m "chore: release v${{ steps.semver.outputs.version }}" --no-verify
-      #     git push
-
-      # - name: Build Lite Release
-      #   run: |
-      #     rm -rf .git
-      #     cp -r ../.git .git
-      #     chmod +x build.sh
-      #     ./build.sh --release --compress --lite
-      #   working-directory: ./lite
-      #   env:
-      #     CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
-      #     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-
-      # - name: Upload Release Assets
-      #   run: |
-      #     # Delete local tag, or gh cli will complain about it.
-      #     git tag -d ${{ steps.get_current_tag.outputs.current_tag }}
-      #     gh release create \
-      #       --title "Release ${{ steps.get_current_tag.outputs.current_tag }}" \
-      #       --prerelease=${{ steps.check_pre_release.outputs.is_pre_release }} \
-      #       ${{ steps.get_current_tag.outputs.current_tag }} \
-      #       dist/openlist-frontend-dist-v*.tar.gz dist/i18n.tar.gz
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Rename dist
-        run: |
-          cd dist 
+          mkdir -p artifact
+          cd dist
           ls
-          sudo mv openlist-frontend-dist-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz dist.tar.gz
-          sudo mv openlist-frontend-dist-lite-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz dist-lite.tar.gz
-          sudo find . -mindepth 1 -not \( -name "dist.tar.gz" -o -name "dist-lite.tar.gz" \) -exec rm -rf {} +
+          cd ..
+          mv dist/openlist-frontend-dist-lite-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz artifact/dist-lite.tar.gz/
+          mv regular-dist/openlist-frontend-dist-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz artifact/dist.tar.gz
+          cd artifact
           ls
+
+      # - name: Rename dist
+      #   run: |
+      #     cd dist
+      #     sudo mv openlist-frontend-dist-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz dist.tar.gz
+      #     sudo mv openlist-frontend-dist-lite-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz dist-lite.tar.gz
+      #     sudo find . -mindepth 1 -not \( -name "dist.tar.gz" -o -name "dist-lite.tar.gz" \) -exec rm -rf {} +
+      #     ls
 
       - name: Upload dist to Artifact
         uses: sylingd/tencent-cos-and-cdn-action@v1.4.2
@@ -217,7 +182,7 @@ jobs:
           cdn_type: eo
           # cdn_prefix: https://cdn.example.com/demo/
           eo_zone: zone-123456789
-          local_path: "dist"
+          local_path: "artifact"
           remote_path: github
           clean: false
 
