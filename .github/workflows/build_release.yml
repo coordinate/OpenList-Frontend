@@ -135,8 +135,8 @@ jobs:
 
       - name: Move regular build
         run: |
-          mkdir -p regular-dist
-          mv dist/* regular-dist/
+          mkdir -p artifact
+          mv dist/openlist-frontend-dist-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz artifact/dist.tar.gz
 
       - name: Build Lite Release
         run: |
@@ -146,16 +146,9 @@ jobs:
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
-      - name: Move lite build and restore regular build
+      - name: Move lite build
         run: |
-          mkdir -p artifact
-          cd dist
-          ls
-          cd ..
-          mv dist/openlist-frontend-dist-lite-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz artifact/dist-lite.tar.gz/
-          mv regular-dist/openlist-frontend-dist-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz artifact/dist.tar.gz
-          cd artifact
-          ls
+          mv dist/openlist-frontend-dist-lite-${{ steps.get_current_tag.outputs.current_tag }}.tar.gz artifact/dist-lite.tar.gz
 
       # - name: Rename dist
       #   run: |
