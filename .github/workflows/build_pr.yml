@@ -1,10 +1,11 @@
 name: PR Build Check
 
 on:
-  pull_request:
-    branches:
-      - main
-    types: [opened, synchronize, reopened]
+  # pull_request:
+  #   branches:
+  #     - main
+  #   types: [opened, synchronize, reopened]
+  workflow_dispatch:
 
 jobs:
   build-check:

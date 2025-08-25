@@ -27,6 +27,26 @@ export const players: {
   platforms: string[]
 }[] = [
   {
+    icon: "default",
+    name: "Default Player",
+    scheme:
+      "intent://$durl#Intent;action=android.intent.action.player;type=video/*;end",
+    platforms: ["Android"],
+  },
+  {
+    icon: "pico",
+    name: "Pico Player",
+    scheme: "pico://$durl",
+    platforms: ["Android"],
+  },
+  {
+    icon: "pico2",
+    name: "Pico2 Player",
+    scheme:
+      "intent:$durl#Intent;package=com.picovr.assistantphone.global;S.title=$name;end",
+    platforms: ["Android"],
+  },
+  {
     icon: "iina",
     name: "IINA",
     scheme: "iina://weblink?url=$edurl",
