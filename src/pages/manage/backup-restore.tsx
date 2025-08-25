@@ -60,7 +60,7 @@ const BackupRestore = () => {
   const [password, setPassword] = createSignal("")
   const t = useT()
   useManageTitle("manage.sidemenu.backup-restore")
-  let logRef: HTMLDivElement
+  let logRef: HTMLDivElement | undefined
   const [log, setLog] = createSignal<
     {
       type: LogType
@@ -69,7 +69,9 @@ const BackupRestore = () => {
   >([])
   const appendLog = (msg: string, type: LogType) => {
     setLog((prev) => [...prev, { type, msg }])
-    logRef.scrollTop = logRef.scrollHeight
+    if (logRef) {
+      logRef.scrollTop = logRef.scrollHeight
+    }
   }
   const [getSettingsLoading, getSettings] = useFetch(
     (): PResp<any> => r.get("/admin/setting/list"),
@@ -259,6 +261,7 @@ const BackupRestore = () => {
   }
   const restore = async () => {
     appendLog(t("br.start_restore"), "info")
+    appendLog("test", "info")
     const file = document.createElement("input")
     file.type = "file"
     file.accept = "application/json"
