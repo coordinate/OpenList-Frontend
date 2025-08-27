@@ -29,21 +29,7 @@ export const players: {
   {
     icon: "vr",
     name: "Default Player",
-    scheme:
-      "intent://$durl#Intent;action=android.intent.action.player;type=video/*;end",
-    platforms: ["Android"],
-  },
-  {
-    icon: "vr",
-    name: "Pico Player",
-    scheme: "pico://$durl",
-    platforms: ["Android"],
-  },
-  {
-    icon: "vr",
-    name: "Pico2 Player",
-    scheme:
-      "intent:$durl#Intent;package=com.picovr.assistantphone.global;S.title=$name;end",
+    scheme: "$durl",
     platforms: ["Android"],
   },
   {
@@ -213,13 +199,12 @@ export const VideoBox = (props: {
                     if (item.icon === "vr") {
                       e.preventDefault()
                       // 调用Android平台的playVideo方法
+                      // console.log(objStore.raw_url)
                       if (
                         window.Android &&
                         typeof window.Android.playVideo === "function"
                       ) {
-                        window.Android.playVideo(
-                          "http://artifacter.asia/github/sample_video.mp4",
-                        )
+                        window.Android.playVideo(objStore.raw_url)
                       } else {
                         console.log("Android平台不存在playVideo方法")
                       }
