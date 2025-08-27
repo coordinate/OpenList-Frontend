@@ -83,17 +83,6 @@ jobs:
           git config user.name "${{ secrets.BOT_USERNAME }}"
           git config user.email "${{ secrets.BOT_USEREMAIL }}"
 
-      # - name: Update package.json and commit
-      #   if: github.event_name == 'workflow_dispatch'
-      #   run: |
-      #     jq --arg version "${{ steps.semver.outputs.version }}" '.version = $version' package.json > package.json.tmp && mv package.json.tmp package.json
-      #     git add package.json
-      #     git commit -S -m "chore: release v${{ steps.semver.outputs.version }}" --no-verify
-      #     git push
-
-      #     # For local build, needn't push, the tag will be created by `gh release create`
-      #     git tag -s "v${{ steps.semver.outputs.version }}" -m "Release v${{ steps.semver.outputs.version }}"
-
       - name: Get current tag
         id: get_current_tag
         run: |
@@ -119,10 +108,14 @@ jobs:
             git tag -s "$CURRENT_TAG" -m "Release $CURRENT_TAG"
           fi
 
-      # - name: Generate changelog
-      #   id: generate_changelog
-      #   run: |
-      #     npx changelogithub --output ${{ github.workspace }}-CHANGELOG.txt || echo "" > ${{ github.workspace }}-CHANGELOG.txt
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "v0.0.0"
+          replace: ${{ steps.get_current_tag.outputs.current_tag }}
+          regex: false
+          include: "src/pages/home/header/Header.tsx"
+          # exclude: "**/node_modules/**"  # 可选: 指定要排除的文件
 
       - name: Build Release
         run: |
