@@ -54,6 +54,17 @@ export const Header = () => {
             />
           </HStack>
           <HStack class="header-right" spacing="$2">
+            <HStack
+              px="$2"
+              py="$1"
+              rounded="$md"
+              bgColor={changeColor(getMainColor(), { alpha: 0.15 })}
+              color={getMainColor()}
+            >
+              {new Date().toISOString()}
+            </HStack>
+          </HStack>
+          <HStack class="header-right" spacing="$2">
             <Show when={objStore.state === State.Folder}>
               <Show when={getSetting("search_index") !== "none"}>
                 <HStack

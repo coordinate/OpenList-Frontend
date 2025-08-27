@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@pdfslick/core@3.0.0':
-    hash: h4ua6dncpwke4tlcj36t6o7tvm
+    hash: 6f88e17505cc077fbc2bab774ad2cfaaddad8c69c7c58f9f11071e8efd25ad8c
     path: patches/@pdfslick__core@3.0.0.patch
 
 importers:
@@ -3323,8 +3323,8 @@ packages:
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
 
-  webworkify-webpack@https://codeload.github.com/xqq/webworkify-webpack/tar.gz/24d1e719b4a6cac37a518b2bb10fe124527ef4ef:
-    resolution: {tarball: https://codeload.github.com/xqq/webworkify-webpack/tar.gz/24d1e719b4a6cac37a518b2bb10fe124527ef4ef}
+  webworkify-webpack@git+https://github.com/xqq/webworkify-webpack.git#24d1e719b4a6cac37a518b2bb10fe124527ef4ef:
+    resolution: {commit: 24d1e719b4a6cac37a518b2bb10fe124527ef4ef, repo: https://github.com/xqq/webworkify-webpack.git, type: git}
     version: 2.1.5
 
   whatwg-url@5.0.0:
@@ -4348,7 +4348,7 @@ snapshots:
       '@napi-rs/canvas-win32-x64-msvc': 0.1.74
     optional: true
 
-  '@pdfslick/core@3.0.0(patch_hash=h4ua6dncpwke4tlcj36t6o7tvm)':
+  '@pdfslick/core@3.0.0(patch_hash=6f88e17505cc077fbc2bab774ad2cfaaddad8c69c7c58f9f11071e8efd25ad8c)':
     dependencies:
       pdfjs-dist: 5.4.54
       zustand: 5.0.5
@@ -4360,7 +4360,7 @@ snapshots:
 
   '@pdfslick/solid@3.0.0(solid-js@1.9.7)':
     dependencies:
-      '@pdfslick/core': 3.0.0(patch_hash=h4ua6dncpwke4tlcj36t6o7tvm)
+      '@pdfslick/core': 3.0.0(patch_hash=6f88e17505cc077fbc2bab774ad2cfaaddad8c69c7c58f9f11071e8efd25ad8c)
       '@solid-primitives/resize-observer': 2.1.1(solid-js@1.9.7)
       solid-js: 1.9.7
     transitivePeerDependencies:
@@ -6183,7 +6183,7 @@ snapshots:
   mpegts.js@1.8.0:
     dependencies:
       es6-promise: 4.2.8
-      webworkify-webpack: https://codeload.github.com/xqq/webworkify-webpack/tar.gz/24d1e719b4a6cac37a518b2bb10fe124527ef4ef
+      webworkify-webpack: git+https://github.com/xqq/webworkify-webpack.git#24d1e719b4a6cac37a518b2bb10fe124527ef4ef
 
   mri@1.2.0: {}
 
@@ -6858,7 +6858,7 @@ snapshots:
 
   webidl-conversions@3.0.1: {}
 
-  webworkify-webpack@https://codeload.github.com/xqq/webworkify-webpack/tar.gz/24d1e719b4a6cac37a518b2bb10fe124527ef4ef: {}
+  webworkify-webpack@git+https://github.com/xqq/webworkify-webpack.git#24d1e719b4a6cac37a518b2bb10fe124527ef4ef: {}
 
   whatwg-url@5.0.0:
     dependencies:

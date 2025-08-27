@@ -17,8 +17,8 @@ import { setArchiveExtensions } from "~/store/archive"
 import { Resp } from "~/types"
 import { base_path, bus, handleRespWithoutAuthAndNotify, r } from "~/utils"
 import { MustUser, UserOrGuest } from "./MustUser"
-import "./index.css"
 import { globalStyles } from "./theme"
+import "./index.css"
 
 const Home = lazy(() => import("~/pages/home/Layout"))
 const Manage = lazy(() => import("~/pages/manage"))
