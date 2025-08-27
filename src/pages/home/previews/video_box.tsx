@@ -209,6 +209,22 @@ export const VideoBox = (props: {
                     name: objStore.obj.name,
                     d_url: currentObjLink(true),
                   })}
+                  onClick={(e) => {
+                    if (item.icon === "vr") {
+                      e.preventDefault()
+                      // 调用Android平台的playVideo方法
+                      if (
+                        window.Android &&
+                        typeof window.Android.playVideo === "function"
+                      ) {
+                        window.Android.playVideo(
+                          "http://artifacter.asia/github/sample_video.mp4",
+                        )
+                      } else {
+                        console.log("Android平台不存在playVideo方法")
+                      }
+                    }
+                  }}
                 >
                   <Image
                     m="0 auto"
