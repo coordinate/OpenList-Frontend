@@ -1,7 +1,9 @@
 node_modules
 dist
+artifact
 /src/lang/*
 !/src/lang/en/
 .DS_Store
 .idea
 .test
+build-frontend-and-upload.ps1

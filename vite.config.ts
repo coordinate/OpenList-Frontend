@@ -27,6 +27,16 @@ export default defineConfig({
         insertBodyAfter: true,
       },
     }),
+    // Always copy images (including vr.webp) for both regular and lite versions
+    viteStaticCopy({
+      targets: [
+        {
+          src: "images/*.webp",
+          dest: "images",
+        },
+      ],
+    }),
+    // Copy additional static assets only for non-lite version
     process.env.VITE_LITE !== "true"
       ? viteStaticCopy({
           targets: [

@@ -24,15 +24,15 @@ export const Header = () => {
   })
 
   createEffect(() => {
-    // 每分钟更新一次时间
+    // Update time every minute
     const timer = setInterval(() => {
       setCurrentTime(new Date())
     })
 
-    // 组件卸载时清除定时器
+    // Clear timer when component unmounts
     onCleanup(() => clearInterval(timer))
 
-    // 设置初始时间
+    // Set initial time
     setCurrentTime(new Date())
   })
 
@@ -59,7 +59,7 @@ export const Header = () => {
               bgColor={changeColor(getMainColor(), { alpha: 0.15 })}
               color={getMainColor()}
             >
-              v0.0.0&nbsp;&nbsp;&nbsp;
+              v4.1.1&nbsp;&nbsp;&nbsp;
               {currentTime().toLocaleString("zh-CN", {
                 year: "numeric",
                 month: "2-digit",

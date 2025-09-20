@@ -195,7 +195,7 @@ export const VideoBox = (props: {
                     name: objStore.obj.name,
                     d_url: currentObjLink(true),
                   })}
-                  onClick={(e) => {
+                  onClick={(e: MouseEvent) => {
                     if (item.icon === "vr") {
                       e.preventDefault()
                       // 调用Android平台的playVideo方法
